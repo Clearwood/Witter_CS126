@@ -9,12 +9,11 @@ package uk.ac.warwick.java.cs126.services;
 import uk.ac.warwick.java.cs126.models.User;
 
 import java.util.Date;
-import java.lang.*;
 
 public class UserStore implements IUserStore {
-private MyLinkedList<User> UserStore;
+private IntegratedSortedListAndHashMap<User> UserStore;
     public UserStore() {
-        UserStore=new MyLinkedList<User>();
+        UserStore=new IntegratedSortedListAndHashMap<User>();
     }
 
     public boolean addUser(User usr) {
@@ -24,40 +23,24 @@ private MyLinkedList<User> UserStore;
 
     public User getUser(int uid) {
         // TODO
-            for (int i = 0; i < UserStore.size(); i++){
-                if (UserStore.get(i).getId()==uid) return (UserStore.get(i));
-            }
-            return null;
+            return UserStore.getByID(uid);
     }
 
     public User[] getUsers() {
         // TODO 
-        return null;
+        return UserStore.toArrayDate();
     }
 
     public User[] getUsersContaining(String query) {
         // TODO
-        for (int i = 0; i < UserStore.size(); i++){
-            if (UserStore.get(i).getName().contains(query)) return (UserStore.get(i));
-        }
-        return null;
+        return UserStore.getUsersContaining(query);
     }
 
     public User[] getUsersJoinedBefore(Date dateBefore) {
         // TODO 
-        return null;
+        return UserStore.getUsersJoinedBefore(dateBefore);
     }
-    public User[] mergeSortUsers(MyLinkedList<User> user){
-        
-    }
-    public int compareUsers(User a, User b){
-        Comparator<User> c = new Comparator<User>(){
-            @Override
-            public int compare(User a, User b){
-                return a.getDateJoined().compare(b.getDateJoined());
-            }
-        };
-        return c.compare(a, b);
-    }
+
+
 }
 

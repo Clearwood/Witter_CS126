@@ -1,0 +1,11 @@
+uk\ac\warwick\java\cs126\services\UserStore.java:14: error: cannot find symbol
+private IntegratedSortedListAndHashMap<User> UserStore;
+        ^
+  symbol:   class IntegratedSortedListAndHashMap
+  location: class UserStore
+uk\ac\warwick\java\cs126\services\UserStore.java:16: error: cannot find symbol
+        UserStore=new IntegratedSortedListAndHashMap<User>();
+                      ^
+  symbol:   class IntegratedSortedListAndHashMap
+  location: class UserStore
+2 errors
