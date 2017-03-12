@@ -10,35 +10,37 @@ import uk.ac.warwick.java.cs126.models.User;
 
 import java.util.Date;
 
-
 public class UserStore implements IUserStore {
-
+private IntegratedSortedListAndHashMap<User> UserStore;
     public UserStore() {
+        UserStore=new IntegratedSortedListAndHashMap<User>();
     }
 
     public boolean addUser(User usr) {
-        // TODO 
-        return false;
+        return UserStore.add(usr);
+        // TODO
     }
 
     public User getUser(int uid) {
-        // TODO 
-        return null;
+        // TODO
+            return UserStore.getByID(uid);
     }
 
     public User[] getUsers() {
         // TODO 
-        return null;
+        return UserStore.toArrayDate();
     }
 
     public User[] getUsersContaining(String query) {
         // TODO
-        return null;
+        return UserStore.getUsersContaining(query);
     }
 
     public User[] getUsersJoinedBefore(Date dateBefore) {
         // TODO 
-        return null;
+        return UserStore.getUsersJoinedBefore(dateBefore);
     }
-    
+
+
 }
+
