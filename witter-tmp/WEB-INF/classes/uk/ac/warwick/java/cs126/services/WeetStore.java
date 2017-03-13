@@ -19,6 +19,9 @@ import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Comparator;
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
 
 public class WeetStore implements IWeetStore {
     private WeetListElement<Weet> head;
@@ -27,9 +30,9 @@ public class WeetStore implements IWeetStore {
     private HashtagStore hashtagStore;
     private HashMap<String, ArrayList<Weet>> messageStore;
     private final int hashMapSize;
-    private ListElement<Weet>[] hashmapWeetID;
-    private ListElement<Weet>[] hashmapUserID;
-    private ListElement<Weet>[] hashmapDate;
+    private WeetListElement<Weet>[] hashmapWeetID;
+    private WeetListElement<Weet>[] hashmapUserID;
+    private WeetListElement<Weet>[] hashmapDate;
 
     Comparator<Weet> c = new Comparator<Weet>(){
         @Override
@@ -74,7 +77,7 @@ public class WeetStore implements IWeetStore {
     }
 
     public boolean addToHashMapUID(WeetListElement<Weet> u){
-        int hash = hash(u.getUserId());
+        int hash = hash(u.getValue().getUserId());
         if(hashmapUserID[hash]!=null){
             u.addNext(hashmapUserID[hash]);
         }
@@ -82,7 +85,7 @@ public class WeetStore implements IWeetStore {
         return true;
     }
     public boolean addToHashMapWeetID(WeetListElement<Weet> u){
-        int hash = hash(u.getId());
+        int hash = hash(u.getValue().getId());
         if(hashmapWeetID[hash]!=null){
             u.addNext(hashmapWeetID[hash]);
         }
@@ -90,7 +93,7 @@ public class WeetStore implements IWeetStore {
         return true;
     }
     public boolean addToHashMapDate(WeetListElement<Weet> u){
-        Date date= u.getDateWeeted();
+        Date date= u.getValue().getDateWeeted();
         int hash = dateToHash(date);
         if(hashmapDate[hash]!=null){
             u.addNext(hashmapDate[hash]);
@@ -168,8 +171,8 @@ public class WeetStore implements IWeetStore {
 
     public Weet[] getWeets() {
         // TODO 
-        User[] tmp = new User[this.count];
-        ListElement<User> ptr = head;
+        Weet[] tmp = new Weet[this.count];
+        WeetListElement<Weet> ptr = head;
         for(int i = 0; i < this.count; i++){
             tmp[i] = ptr.getValue();
             ptr = ptr.getNext();
@@ -179,16 +182,18 @@ public class WeetStore implements IWeetStore {
 
     public Weet[] getWeetsByUser(User usr) {
         // TODO
+        ArrayList<Weet> tmp = new ArrayList<>();
         int uid = usr.getId();
         int hash = hash(uid);
-        WeetListElement<User> ptr = hashmapUserID[hash];
+        WeetListElement<Weet> ptr = hashmapUserID[hash];
         while (ptr.getNext(0) != null) {
             if (ptr.getValue().getUserId()==uid) {
-                return ptr.getValue();
+                tmp.add(ptr.getValue());
             }
             ptr = ptr.getNext(0);
         }
-        return null;
+        MergeSort<Weet> tmp2 = new MergeSort<Weet>(tmp,c);
+        return tmp2.getSorted().toArray();
     }
 
     public Weet[] getWeetsContaining(String query) {

@@ -20,15 +20,6 @@
                                  ^
   symbol:   method getDateJoined()
   location: class Object
-.\uk\ac\warwick\java\cs126\services\MyLinkedList.java:74: error: not a statement
-        E[this.size()] tmp;
-         ^
-.\uk\ac\warwick\java\cs126\services\MyLinkedList.java:74: error: ';' expected
-        E[this.size()] tmp;
-                      ^
-.\uk\ac\warwick\java\cs126\services\MyLinkedList.java:74: error: not a statement
-        E[this.size()] tmp;
-                       ^
 .\uk\ac\warwick\java\cs126\services\IntegratedSortedListAndHashMap.java:63: error: cannot find symbol
         while(ptr != null && ptr.getValue().getDateJoined().before(dateBefore)) {
                                            ^
@@ -68,20 +59,9 @@
 .\uk\ac\warwick\java\cs126\services\IntegratedSortedListAndHashMap.java:123: error: generic array creation
         User[] tmp = new User[this.count];
                      ^
-.\uk\ac\warwick\java\cs126\services\MyLinkedList.java:74: error: cannot find symbol
-        E[this.size()] tmp;
-        ^
-  symbol:   variable E
-  location: class MyLinkedList<E>
-  where E is a type-variable:
-    E extends Object declared in class MyLinkedList
-.\uk\ac\warwick\java\cs126\services\MyLinkedList.java:77: error: cannot find symbol
-            tmp[i] = ptr.getValue();
-            ^
-  symbol:   variable tmp
-  location: class MyLinkedList<E>
-  where E is a type-variable:
-    E extends Object declared in class MyLinkedList
+.\uk\ac\warwick\java\cs126\services\MyLinkedList.java:74: error: generic array creation
+        E[] tmp = new E[this.size()];
+                  ^
 Note: .\uk\ac\warwick\java\cs126\services\IntegratedSortedListAndHashMap.java uses unchecked or unsafe operations.
 Note: Recompile with -Xlint:unchecked for details.
-16 errors
+12 errors

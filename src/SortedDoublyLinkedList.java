@@ -124,7 +124,7 @@ public class SortedDoublyLinkedList<K extends Comparable<K>,V extends Comparable
                 this.count++;
                 return true;
             }
-            ptr = tail.getPrev();
+            SortedListElement<KeyValuePair<K,V>> ptr = tail.getPrev();
             while(ptr != head){
                 if(tmp.compareTo(ptr.getValue())!= compareFactor){
                     tmp2.setPrev(ptr);
@@ -150,7 +150,7 @@ public class SortedDoublyLinkedList<K extends Comparable<K>,V extends Comparable
                 this.count++;
                 return true;
             }
-            ptr = tail.getPrev();
+            SortedListElement<KeyValuePair<K,V>> ptr = tail.getPrev();
             while(ptr != head){
                 if(tmp.getValue().compareTo(ptr.getValue().getValue())!= compareFactor){
                     tmp2.setPrev(ptr);
@@ -174,5 +174,7 @@ public class SortedDoublyLinkedList<K extends Comparable<K>,V extends Comparable
             head=tmp2;
             return true;
         }
+        return false;
     }
+
 }

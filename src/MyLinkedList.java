@@ -71,12 +71,13 @@ public class MyLinkedList<E> implements IList<E> {
       }
     }
     public E[] toArray(){
-        E[] tmp = new E[this.size()];
+        E[] tmp = (E[]) new Object[this.size()];
         MyLinkedListElement<E> ptr = head;
         for(int i = 0; i < this.count; i++){
             tmp[i] = ptr.getValue();
             ptr = ptr.getNext();
         }
+        return  tmp;
     }
     // INCOMPLETE.
     public E removeFromHead() {
