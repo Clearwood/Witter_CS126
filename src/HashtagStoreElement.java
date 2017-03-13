@@ -12,17 +12,17 @@ public class HashtagStoreElement<E> {
         return this.value;
     }
 
-    public ListElement<E> getNext() {
+    public HashtagStoreElement<E> getNext() {
         return this.next;
     }
-    public ListElement<E> getPrev() {
+    public HashtagStoreElement<E> getPrev() {
         return this.prev;
     }
 
-    public void setNext(ListElement<E> e) {
+    public void setNext(HashtagStoreElement<E> e) {
         this.next = e;
     }
-    public void setPrev(ListElement<E> e) {
+    public void setPrev(HashtagStoreElement<E> e) {
         this.prev = e;
     }
 

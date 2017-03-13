@@ -16,7 +16,9 @@ public class KeyValuePair<K extends Comparable<K>,V> implements Comparable<KeyVa
     public V getValue() {
         return value;
     }
-
+    public void updateValue(V value){
+        this.value = value;
+    }
     public int compareTo(KeyValuePair<K,V> o) {
         return o.getKey().compareTo(this.getKey());
     }

@@ -82,12 +82,11 @@ public class IntegratedSortedListAndHashMap<User> {
     public User getByID(int uid){
         int hash = hash(uid);
         ListElement<User> ptr = hashmapUserID[hash];
-        int i=size()-1;
         while (ptr.getNextID() != null) {
             if (ptr.getValue().getId()==uid) {
                 return ptr.getValue();
             }
-            ptr = ptr.getNext();
+            ptr = ptr.getNextID();
         }
         return null;
     }

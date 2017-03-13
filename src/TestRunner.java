@@ -1,4 +1,5 @@
-public class TestRunner 
+package uk.ac.warwick.java.cs126.services;
+public class TestRunner
 {
 
     public static void main(String[] args)

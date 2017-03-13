@@ -1,19 +1,21 @@
+package uk.ac.warwick.java.cs126.services;
 public class MergeSort<E> {
 
-    private ArrayList<String> strList;
-
+    private ArrayList<E> strList;
+    private final Comparator<E> c;
     // Constructor
-    public MergeSort(ArrayList<String> input) {
+    public MergeSort(ArrayList<E> input, Comparator<E> c) {
         strList = input;
-    }
-
-    public void sort() {
+        this.c = c;
         strList = mergeSort(strList);
     }
+    public ArrayList<E> getSorted(){
+        return strList;
+    }
 
-    public ArrayList<String> mergeSort(ArrayList<String> whole) {
-        ArrayList<String> left = new ArrayList<String>();
-        ArrayList<String> right = new ArrayList<String>();
+    public ArrayList<E> mergeSort(ArrayList<E> whole) {
+        ArrayList<E> left = new ArrayList<E>();
+        ArrayList<E> right = new ArrayList<E>();
         int center;
 
         if (whole.size() == 1) {
@@ -49,7 +51,7 @@ public class MergeSort<E> {
         // been used up, keep taking the smaller of left.get(leftIndex)
         // or right.get(rightIndex) and adding it at both.get(bothIndex).
         while (leftIndex < left.size() && rightIndex < right.size()) {
-            if ( (left.get(leftIndex).compareTo(right.get(rightIndex))) < 0) {
+            if ( c.compare(left.get(leftIndex),right.get(rightIndex) > 0) {
                 whole.set(wholeIndex, left.get(leftIndex));
                 leftIndex++;
             } else {
@@ -59,7 +61,7 @@ public class MergeSort<E> {
             wholeIndex++;
         }
 
-        ArrayList<String> rest;
+        ArrayList<E> rest;
         int restIndex;
         if (leftIndex >= left.size()) {
             // The left ArrayList has been use up...
@@ -76,29 +78,5 @@ public class MergeSort<E> {
             whole.set(wholeIndex, rest.get(i));
             wholeIndex++;
         }
-    }
-
-    public void show() {
-        System.out.println("Sorted:");
-        for (int i=0; i< strList.size();i++) {
-            System.out.println(strList.get(i));
-        }
-    }
-
-    public static void main(String[] args) {
-        ArrayList<String> input = new ArrayList<String>();
-        Scanner sc = new Scanner(System.in);
-
-        System.out.println("Enter your text, type done for exit:");
-        String strin = sc.nextLine();
-
-        while(!strin.equals("done")) {
-            input.add(strin);
-            strin = sc.nextLine();
-        }
-        System.out.println("************************");
-        MergeSort test = new MergeSort(input);
-        test.sort();
-        test.show();
     }
 }

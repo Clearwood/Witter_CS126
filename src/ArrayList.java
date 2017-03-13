@@ -18,6 +18,14 @@ public class ArrayList<E>{
         ArrayStore = new Object[capacity];
         this.capacity = capacity;
     }
+    public E set(int index, E element) {
+        if (index >= this.size()) {
+            throw new ArrayIndexOutOfBoundsException("index > size: "+index+" >= "+size);
+        }
+        E replaced = this.get(index);
+        this.ArrayStore[index] = element;
+        return replaced;
+    }
     public boolean add(E element){
         if(size<capacity){
             ArrayStore[size]=element;

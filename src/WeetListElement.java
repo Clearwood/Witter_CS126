@@ -3,10 +3,11 @@ public class WeetListElement<E> {
     private final E value;
     private WeetListElement<E> next;
     private WeetListElement<E> prev;
-    private WeetListElement<E> nextID;
+    private ArrayList<WeetListElement<E>> otherReferences;
 
     public WeetListElement(E value) {
         this.value = value;
+        otherReferences = new ArrayList<>(3);
     }
 
     public E getValue() {
@@ -16,8 +17,8 @@ public class WeetListElement<E> {
     public WeetListElement<E> getNext() {
         return this.next;
     }
-    public WeetListElement<E> getNextID() {
-        return this.nextID;
+    public WeetListElement<E> getNext(int index) {
+        return this.otherReferences.get(index);
     }
     public WeetListElement<E> getPrev() {
         return this.prev;
@@ -26,8 +27,11 @@ public class WeetListElement<E> {
     public void setNext(WeetListElement<E> e) {
         this.next = e;
     }
-    public void setNextID(WeetListElement<E> e) {
-        this.nextID = e;
+    public void setNext(WeetListElement<E> e, int index) {
+        this.otherReferences.set(index, e);
+    }
+    public void addNext(WeetListElement<E> e){
+        this.otherReferences.add(e);
     }
 
     public void setPrev(WeetListElement<E> e) {
