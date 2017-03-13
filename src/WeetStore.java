@@ -44,6 +44,9 @@ public class WeetStore implements IWeetStore {
     public WeetStore() {
         hashMapSize=100003;
         messageStore = new HashMap<String, ArrayList<Weet>>(hashMapSize);
+        hashmapWeetID = new WeetListElement<Weet>[hashMapSize];
+        hashmapUserID = new WeetListElement<Weet>[hashMapSize];
+        hashmapDate = new WeetListElement<Weet>[hashMapSize];
         head = null;
         tail = null;
         this.count = 0;
@@ -121,7 +124,7 @@ public class WeetStore implements IWeetStore {
     public boolean addWeet(Weet weet) {
         addHashtag(weet.getMessage());
         addSubStrings(weet.getMessage(),weet);
-        WeetListElement<Weet> u = new WeetListElement<>(weet);
+        WeetListElement<Weet> u = new WeetListElement<Weet>(weet);
         addToHashMapUID(u);
         addToHashMapWeetID(u);
         addToHashMapDate(u);
