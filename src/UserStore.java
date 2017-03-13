@@ -11,9 +11,9 @@ import uk.ac.warwick.java.cs126.models.User;
 import java.util.Date;
 
 public class UserStore implements IUserStore {
-private IntegratedSortedListAndHashMap<User> UserStore;
+private IntegratedSortedListAndHashMap UserStore;
     public UserStore() {
-        UserStore=new IntegratedSortedListAndHashMap<User>();
+        UserStore=new IntegratedSortedListAndHashMap();
     }
 
     public boolean addUser(User usr) {

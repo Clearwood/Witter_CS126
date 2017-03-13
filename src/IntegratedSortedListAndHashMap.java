@@ -2,7 +2,7 @@ package uk.ac.warwick.java.cs126.services;
 import uk.ac.warwick.java.cs126.models.User;
 import java.util.Date;
 import java.util.Comparator;
-public class IntegratedSortedListAndHashMap<User> {
+public class IntegratedSortedListAndHashMap {
 
     private ListElement<User> head;
     private ListElement<User> tail;
@@ -21,8 +21,8 @@ public class IntegratedSortedListAndHashMap<User> {
         return this.count;
     }
     public boolean add(User user){
-        ListElement<User> u = new ListElement<>(user);
-        int hash = hash(u.getValue().getId());
+        ListElement<User> u = new ListElement<User>(user);
+        int hash = hash(user.getId());
         if(hashmapUserID[hash]!=null){
             u.setNextID(hashmapUserID[hash]);
         }
@@ -33,7 +33,7 @@ public class IntegratedSortedListAndHashMap<User> {
             return true;
         } else{
             ListElement<User> ptr = head;
-            Date UserJoined = u.getValue().getDateJoined();
+            Date UserJoined = user.getDateJoined();
             if(ptr.getValue().getDateJoined().before(UserJoined)){
                 head.setPrev(u);
                 u.setNext(head);
