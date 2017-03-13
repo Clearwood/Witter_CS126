@@ -43,7 +43,7 @@ public class MergeSort<E> {
         return whole;
     }
 
-    private void merge(ArrayList<String> left, ArrayList<String> right, ArrayList<String> whole) {
+    private void merge(ArrayList<E> left, ArrayList<E> right, ArrayList<E> whole) {
         int leftIndex = 0;
         int rightIndex = 0;
         int wholeIndex = 0;
