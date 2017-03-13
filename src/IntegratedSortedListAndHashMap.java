@@ -1,6 +1,7 @@
 package uk.ac.warwick.java.cs126.services;
 import uk.ac.warwick.java.cs126.models.User;
 import java.util.Date;
+import java.util.Comparator;
 public class IntegratedSortedListAndHashMap<User> {
 
     private ListElement<User> head;
@@ -21,7 +22,7 @@ public class IntegratedSortedListAndHashMap<User> {
     }
     public boolean add(User user){
         ListElement<User> u = new ListElement<>(user);
-        int hash = hash(u.getId());
+        int hash = hash(u.getValue().getId());
         if(hashmapUserID[hash]!=null){
             u.setNextID(hashmapUserID[hash]);
         }
@@ -58,7 +59,7 @@ public class IntegratedSortedListAndHashMap<User> {
     }
 
     public User[] getUsersJoinedBefore(Date dateBefore){
-        MyLinkedList<User> usersJoinedBefore = new MyLinkedList<>();
+        ArrayList<User> usersJoinedBefore = new ArrayList<>();
         ListElement<User> ptr = tail;
         while(ptr != null && ptr.getValue().getDateJoined().before(dateBefore)) {
             usersJoinedBefore.add(ptr.getValue());
@@ -68,7 +69,7 @@ public class IntegratedSortedListAndHashMap<User> {
     }
     public User[] getUsersContaining(String query) {
         // TODO
-        MyLinkedList<User> usersContainingString = new MyLinkedList<>();
+        ArrayList<User> usersContainingString = new ArrayList<>();
         ListElement<User> ptr = head;
         while(ptr != null){
             if (ptr.getValue().getName().contains(query)){
@@ -92,7 +93,7 @@ public class IntegratedSortedListAndHashMap<User> {
     }
     public String toString(){
         String bigOne = "[";
-        ListElement<E> ptr = head;
+        ListElement<User> ptr = head;
         while(ptr != null){
             bigOne += ptr.getValue();
             ptr = ptr.getNext();
