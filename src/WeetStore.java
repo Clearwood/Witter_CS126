@@ -20,6 +20,8 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Comparator;
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
 
 public class WeetStore implements IWeetStore {
     private WeetListElement<Weet> head;
@@ -28,9 +30,9 @@ public class WeetStore implements IWeetStore {
     private HashtagStore hashtagStore;
     private HashMap<String, ArrayList<Weet>> messageStore;
     private final int hashMapSize;
-    private ListElement<Weet>[] hashmapWeetID;
-    private ListElement<Weet>[] hashmapUserID;
-    private ListElement<Weet>[] hashmapDate;
+    private WeetListElement<Weet>[] hashmapWeetID;
+    private WeetListElement<Weet>[] hashmapUserID;
+    private WeetListElement<Weet>[] hashmapDate;
 
     Comparator<Weet> c = new Comparator<Weet>(){
         @Override
@@ -75,7 +77,7 @@ public class WeetStore implements IWeetStore {
     }
 
     public boolean addToHashMapUID(WeetListElement<Weet> u){
-        int hash = hash(u.getUserId());
+        int hash = hash(u.getValue().getUserId());
         if(hashmapUserID[hash]!=null){
             u.addNext(hashmapUserID[hash]);
         }
@@ -83,7 +85,7 @@ public class WeetStore implements IWeetStore {
         return true;
     }
     public boolean addToHashMapWeetID(WeetListElement<Weet> u){
-        int hash = hash(u.getId());
+        int hash = hash(u.getValue().getId());
         if(hashmapWeetID[hash]!=null){
             u.addNext(hashmapWeetID[hash]);
         }
@@ -91,7 +93,7 @@ public class WeetStore implements IWeetStore {
         return true;
     }
     public boolean addToHashMapDate(WeetListElement<Weet> u){
-        Date date= u.getDateWeeted();
+        Date date= u.getValue().getDateWeeted();
         int hash = dateToHash(date);
         if(hashmapDate[hash]!=null){
             u.addNext(hashmapDate[hash]);
