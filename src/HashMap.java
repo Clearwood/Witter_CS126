@@ -6,7 +6,7 @@ package uk.ac.warwick.java.cs126.services;
 public class HashMap<K extends Comparable<K>,V> implements IMap<K,V> {
 
     protected KeyValuePairLinkedList[] table;
-
+    private int size = 0;
     public HashMap() {
         /* for very simple hashing, primes reduce collisions */
         this(11);
@@ -27,7 +27,28 @@ public class HashMap<K extends Comparable<K>,V> implements IMap<K,V> {
 
         return table[location].get(key, count);
     }
+    public ArrayList<KeyValuePair<K,V>> getArray(){
+        ArrayList<KeyValuePair<K,V>> tmp = new ArrayList<>();
+        for(int i = 0; i < table.length; i++) {
+            ListElement<KeyValuePair<K,V>> ptr = table[i].getHead();
+            while(ptr != null) {
+                tmp.add(temp.getValue());
+                temp = temp.getNext();
+            }
+        }
+        return tmp;
+    }
+    public boolean isKey(K key){
+        int hash_code = hash(key);
+        int location = hash_code % table.length;
 
+        ListElement<KeyValuePair> ptr = table[location].head;
+        if(table[location].get(key)==null){
+            return false;
+        } else {
+            return true;
+        }
+    }
     protected void initTable(int size) {
         table = new KeyValuePairLinkedList[size];
         for(int i = 0; i < table.length; i++) {
@@ -39,9 +60,12 @@ public class HashMap<K extends Comparable<K>,V> implements IMap<K,V> {
         int code = key.hashCode();
         return code;
     }
-
+    public int size(){
+        return this.size;
+    }
 
     public void add(K key, V value) {
+        size++;
         int hash_code = hash(key);
         int location = hash_code % table.length;
 
