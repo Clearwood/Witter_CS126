@@ -162,6 +162,7 @@ public class FollowerStore implements IFollowerStore {
             returnTopUsers[i]=topUsers.get(i);
         }
         return returnTopUsers;*/
+        return null;
     }
 
 }
