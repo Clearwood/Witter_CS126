@@ -33,7 +33,7 @@ public class WeetStore implements IWeetStore {
 
     Comparator<Weet> c = new Comparator<Weet>(){
         @Override
-        public int compare(User a, User b){
+        public int compare(Weet a, Weet b){
             return a.getDateWeeted().compareTo(b.getDateWeeted());
         }
     };
@@ -61,7 +61,6 @@ public class WeetStore implements IWeetStore {
                 tmp.add(weet);
             }
         }
-        if(messageStore)
     }
     public void addHashtag(String message){
         Pattern MY_PATTERN = Pattern.compile("#(\\S+)");

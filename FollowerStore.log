@@ -1,0 +1,7 @@
+uk\ac\warwick\java\cs126\services\FollowerStore.java:56: error: ';' expected
+        int[] returnArray = new int[Sorted.size()]();
+                                                  ^
+uk\ac\warwick\java\cs126\services\FollowerStore.java:69: error: ';' expected
+        int[] returnArray = new int[Sorted.size()]();
+                                                  ^
+2 errors
