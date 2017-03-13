@@ -156,7 +156,8 @@ public class FollowerStore implements IFollowerStore {
     public int[] getTopUsers() {
         // TODO
         ArrayList<Integer> topUsers = mostFollowers.getKeysArrayList();
-        int[] returnTopUsers = int[topUsers.size()];
+        int sizeArrayReturn = topUsers.size();
+        int[] returnTopUsers = new int[sizeArrayReturn];
         for(int i=0; i<topUsers.size(); i++){
             returnTopUsers[i]=topUsers.get(i);
         }
