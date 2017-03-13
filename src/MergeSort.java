@@ -1,4 +1,5 @@
 package uk.ac.warwick.java.cs126.services;
+import java.util.Comparator;
 public class MergeSort<E> {
 
     private ArrayList<E> strList;
@@ -51,7 +52,7 @@ public class MergeSort<E> {
         // been used up, keep taking the smaller of left.get(leftIndex)
         // or right.get(rightIndex) and adding it at both.get(bothIndex).
         while (leftIndex < left.size() && rightIndex < right.size()) {
-            if ( c.compare(left.get(leftIndex),right.get(rightIndex) > 0) {
+            if ( c.compare(left.get(leftIndex),right.get(rightIndex)) > 0) {
                 whole.set(wholeIndex, left.get(leftIndex));
                 leftIndex++;
             } else {
