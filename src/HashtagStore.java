@@ -8,7 +8,9 @@ public class HashtagStore{
         head = null;
         this.size = 0;
     }
-    public boolean isEmpty(){return (tail == null || head == null)}
+    public boolean isEmpty(){
+        return (tail == null || head == null);
+    }
     public int size(){
         return size;
     }
