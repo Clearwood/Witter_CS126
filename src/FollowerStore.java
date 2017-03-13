@@ -45,12 +45,12 @@ public class FollowerStore implements IFollowerStore {
              */
             HashMap<Integer,Date> tmp2 = new HashMap<Integer,Date>(211);
             tmp2.add(uid1,followDate);
-            messageStore.add(uid2,tmp2);
+            followerStore.add(uid2,tmp2);
         } else{
             tmp.add(uid1, followDate);
         }
-        HashMap<Integer,Date> tmp = followStore.get(uid1);
-        if(tmp==null){
+        HashMap<Integer,Date> temp = followStore.get(uid1);
+        if(temp==null){
             /*
             According to this website (http://expandedramblings.com/index.php/march-2013-by-the-numbers-a-few-amazing-twitter-stats/)
             the average twitter user has 208 followers, I know witter is something completely different but nonetheless I believed this
@@ -58,9 +58,9 @@ public class FollowerStore implements IFollowerStore {
              */
             HashMap<Integer,Date> tmp2 = new HashMap<Integer,Date>(211);
             tmp2.add(uid2,followDate);
-            messageStore.add(uid1,tmp2);
+            followStore.add(uid1,tmp2);
         } else{
-            tmp.add(uid2, followDate);
+            temp.add(uid2, followDate);
         }
         return true;
     }  
