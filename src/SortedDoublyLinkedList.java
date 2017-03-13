@@ -1,5 +1,5 @@
 package uk.ac.warwick.java.cs126.services;
-public class SortedDoublyLinkedList<K,V>{
+public class SortedDoublyLinkedList<K extends Comparable<K>,V>{
     private SortedListElement<KeyValuePair<K,V>> head = null;
     private SortedListElement<KeyValuePair<K,V>> tail = null;
     private int count = 0;
