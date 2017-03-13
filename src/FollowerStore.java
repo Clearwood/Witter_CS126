@@ -73,7 +73,7 @@ public class FollowerStore implements IFollowerStore {
         int[] returnArray = new int[Sorted.size()];
 
         for(int i = 0; i < Sorted.size(); i++){
-            returnArray[i] = (int) Sorted.get(i).getValue();
+            returnArray[i] = (int) Sorted.get(i).getKey();
         }
         return returnArray;
     }
@@ -86,7 +86,7 @@ public class FollowerStore implements IFollowerStore {
         int[] returnArray = new int[Sorted.size()];
 
         for(int i = 0; i < Sorted.size(); i++){
-            returnArray[i] = (int) Sorted.get(i).getValue();
+            returnArray[i] = (int) Sorted.get(i).getKey();
         }
         return returnArray;
     }
@@ -107,12 +107,12 @@ public class FollowerStore implements IFollowerStore {
         ArrayList<KeyValuePair<Integer,Date>> unSorted = new ArrayList<>();
         for(int i=0; i<tmp.size();i++){
             KeyValuePair<Integer,Date> user = tmp.get(i);
-            int user = (int) user.getKey();
+            int user_id = (int) user.getKey();
             Date db1 = user.getValue();
-            Date db2 = followerStore.get(uid2);
+            Date db2 = followerStore.get(uid2).get(user_id);
             if(db2!=null){
                 Date latest = (db1.compareTo(db2)==1)? db1 : db2;
-                KeyValuePair<Integer,Date> mutual= new KeyValuePair<>(user, latest);
+                KeyValuePair<Integer,Date> mutual= new KeyValuePair<Integer,Date>(user, latest);
                 unSorted.add(mutual);
             }
         }
@@ -121,7 +121,7 @@ public class FollowerStore implements IFollowerStore {
         int[] returnArray = new int[Sorted.size()];
 
         for(int i = 0; i < Sorted.size(); i++){
-            returnArray[i] = (int) Sorted.get(i).getValue();
+            returnArray[i] = (int) Sorted.get(i).getKey();
         }
         return returnArray;
 
@@ -133,12 +133,12 @@ public class FollowerStore implements IFollowerStore {
         ArrayList<KeyValuePair<Integer,Date>> unSorted = new ArrayList<>();
         for(int i=0; i<tmp.size();i++){
             KeyValuePair<Integer,Date> user = tmp.get(i);
-            int user = (int) user.getKey();
+            int user_id = (int) user.getKey();
             Date db1 = user.getValue();
-            Date db2 = followerStore.get(uid2);
+            Date db2 = followerStore.get(uid2).get(user_id);
             if(db2!=null){
                 Date latest = (db1.compareTo(db2)==1)? db1 : db2;
-                KeyValuePair<Integer,Date> mutual= new KeyValuePair<>(user, latest);
+                KeyValuePair<Integer,Date> mutual= new KeyValuePair<Integer,Date>(user, latest);
                 unSorted.add(mutual);
             }
         }
@@ -147,7 +147,7 @@ public class FollowerStore implements IFollowerStore {
         int[] returnArray = new int[Sorted.size()];
 
         for(int i = 0; i < Sorted.size(); i++){
-            returnArray[i] = (int) Sorted.get(i).getValue();
+            returnArray[i] = (int) Sorted.get(i).getKey();
         }
         return returnArray;
 
