@@ -32,10 +32,10 @@ public class FollowerStore implements IFollowerStore {
 
     public boolean addFollower(int uid1, int uid2, Date followDate) {
         // TODO
-        if(!mostFollowers.add(uid2,1)){
+        /*if(!mostFollowers.add(uid2,1)){
             int followers=mostFollowers.getValue(uid2);
             mostFollowers.updateValue(uid2, followers+1);
-        }
+        }*/
         HashMap<Integer,Date> tmp = followerStore.get(uid2);
         if(tmp==null){
             /*
