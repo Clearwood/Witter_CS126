@@ -11,7 +11,7 @@ import uk.ac.warwick.java.cs126.models.User;
 
 import java.util.Date;
 import java.lang.*;
-
+import java.util.Comparator;
 
 public class FollowerStore implements IFollowerStore {
     Comparator<KeyValuePair<Integer,Date>> c = new Comparator<KeyValuePair<Integer,Date>>(){
