@@ -70,7 +70,7 @@ public class FollowerStore implements IFollowerStore {
         ArrayList<KeyValuePair<Integer,Date>> tmp = followerStore.get(uid).getArray();
         MergeSort<KeyValuePair<Integer,Date>> tmp2 = new MergeSort<KeyValuePair<Integer,Date>>(tmp,c);
         ArrayList<KeyValuePair<Integer,Date>> Sorted = tmp2.getSorted();
-        int[] returnArray = new int[Sorted.size()]();
+        int[] returnArray = new int[Sorted.size()];
 
         for(int i = 0; i < Sorted.size(); i++){
             returnArray[i] = (int) Sorted.get(i).getValue();
@@ -83,7 +83,7 @@ public class FollowerStore implements IFollowerStore {
         ArrayList<KeyValuePair<Integer,Date>> tmp = followStore.get(uid).getArray();
         MergeSort<KeyValuePair<Integer,Date>> tmp2 = new MergeSort<KeyValuePair<Integer,Date>>(tmp,c);
         ArrayList<KeyValuePair<Integer,Date>> Sorted = tmp2.getSorted();
-        int[] returnArray = new int[Sorted.size()]();
+        int[] returnArray = new int[Sorted.size()];
 
         for(int i = 0; i < Sorted.size(); i++){
             returnArray[i] = (int) Sorted.get(i).getValue();
@@ -118,7 +118,7 @@ public class FollowerStore implements IFollowerStore {
         }
         MergeSort<KeyValuePair<Integer,Date>> tmp2 = new MergeSort<KeyValuePair<Integer,Date>>(unSorted,c);
         ArrayList<KeyValuePair<Integer,Date>> Sorted = tmp2.getSorted();
-        int[] returnArray = new int[Sorted.size()]();
+        int[] returnArray = new int[Sorted.size()];
 
         for(int i = 0; i < Sorted.size(); i++){
             returnArray[i] = (int) Sorted.get(i).getValue();
@@ -144,7 +144,7 @@ public class FollowerStore implements IFollowerStore {
         }
         MergeSort<KeyValuePair<Integer,Date>> tmp2 = new MergeSort<KeyValuePair<Integer,Date>>(unSorted,c);
         ArrayList<KeyValuePair<Integer,Date>> Sorted = tmp2.getSorted();
-        int[] returnArray = new int[Sorted.size()]();
+        int[] returnArray = new int[Sorted.size()];
 
         for(int i = 0; i < Sorted.size(); i++){
             returnArray[i] = (int) Sorted.get(i).getValue();
