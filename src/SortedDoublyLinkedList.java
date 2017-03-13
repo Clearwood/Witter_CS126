@@ -17,7 +17,7 @@ public class SortedDoublyLinkedList<K extends Comparable<K>,V>{
         return this.count==0;
     };
     public V getValue(K key){
-        return get(key).getValue().getValue();
+        return get(key).getValue();
     }
 
     public int find(K key){
@@ -56,13 +56,13 @@ public class SortedDoublyLinkedList<K extends Comparable<K>,V>{
                 if(ptr!=head) {
                     if (SortedOnValue) {
                         int compareFactor = getCompareFactor();
-                        if (ptr.getValue.getValue().compareTo(ptr.getPrev().getValue().getValue())==compareFactor){
+                        if (ptr.getValue().getValue().compareTo(ptr.getPrev().getValue().getValue())==compareFactor){
                             ptr.getNext().setPrev(ptr.getPrev());
                             ptr.getPrev().setNext(ptr.getNext());
                             if(ptr==tail){
                                 tail=ptr.getPrev();
                             }
-                            ptr2 = ptr.getPrev().getPrev();
+                            SortedListElement<KeyValuePair<K,V>> ptr2 = ptr.getPrev().getPrev();
                             while(ptr2 != head){
                                 if(ptr.getValue().getValue().compareTo(ptr2.getValue().getValue())!= compareFactor){
                                     ptr.setPrev(ptr2);
@@ -107,8 +107,8 @@ public class SortedDoublyLinkedList<K extends Comparable<K>,V>{
         KeyValuePair<K,V> tmp = new KeyValuePair<>(key,value);
         SortedListElement<KeyValuePair<K,V>> tmp2 = new SortedListElement<>(tmp);
         if(isEmpty()){
-            head = tmp;
-            tail = tmp;
+            head = tmp2;
+            tail = tmp2;
             this.count++;
             return true;
         }
