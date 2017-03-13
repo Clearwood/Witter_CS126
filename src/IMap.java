@@ -1,3 +1,4 @@
+package uk.ac.warwick.java.cs126.services;
 /**
  * An interface for a generic map, from keys of type K to values of type V.
  */
