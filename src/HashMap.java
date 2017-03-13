@@ -32,8 +32,8 @@ public class HashMap<K extends Comparable<K>,V> implements IMap<K,V> {
         for(int i = 0; i < table.length; i++) {
             ListElement<KeyValuePair<K,V>> ptr = table[i].getHead();
             while(ptr != null) {
-                tmp.add(temp.getValue());
-                temp = temp.getNext();
+                tmp.add(ptr.getValue());
+                ptr = ptr.getNext();
             }
         }
         return tmp;

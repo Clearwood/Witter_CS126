@@ -171,8 +171,8 @@ public class WeetStore implements IWeetStore {
 
     public Weet[] getWeets() {
         // TODO 
-        User[] tmp = new User[this.count];
-        ListElement<User> ptr = head;
+        Weet[] tmp = new Weet[this.count];
+        WeetListElement<User> ptr = head;
         for(int i = 0; i < this.count; i++){
             tmp[i] = ptr.getValue();
             ptr = ptr.getNext();
@@ -184,7 +184,7 @@ public class WeetStore implements IWeetStore {
         // TODO
         int uid = usr.getId();
         int hash = hash(uid);
-        WeetListElement<User> ptr = hashmapUserID[hash];
+        WeetListElement<Weet> ptr = hashmapUserID[hash];
         while (ptr.getNext(0) != null) {
             if (ptr.getValue().getUserId()==uid) {
                 return ptr.getValue();

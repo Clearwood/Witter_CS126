@@ -65,7 +65,7 @@ public class ArrayList<E>{
             for (int i=index+1;i<this.size();i++) {
                 this.set(i-1, this.get(i));
             }
-            this.array[size-1] = null;
+            this.ArrayStore[size-1] = null;
             size--;
             return true;
         }
@@ -80,7 +80,7 @@ public class ArrayList<E>{
         return false;
     }
     public E[] toArray(){
-        E[] tmp = new Object[size];
+        E[] tmp = new E[size];
         for(int i = 0; i < size; i++){
                 tmp[i]=this.get(i);
         }
