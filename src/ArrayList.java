@@ -80,7 +80,7 @@ public class ArrayList<E>{
         return false;
     }
     public E[] toArray(){
-        E[] tmp = new E[size];
+        E[] tmp = (E[]) new Object[size];
         for(int i = 0; i < size; i++){
                 tmp[i]=this.get(i);
         }

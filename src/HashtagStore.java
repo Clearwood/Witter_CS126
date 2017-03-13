@@ -52,7 +52,7 @@ public class HashtagStore{
     public boolean add(String hashtag){
         if(isEmpty()){
             HashtagElement tmp = new HashtagElement(hashtag);
-            HashtagStoreElement<HashtagElement> tmp2 = new HashtagStoreElement<HashtagElement>(tmp2);
+            HashtagStoreElement<HashtagElement> tmp2 = new HashtagStoreElement<HashtagElement>(tmp);
             head = tmp2;
             tail = tmp2;
         } else {
@@ -95,7 +95,7 @@ public class HashtagStore{
                 }
             } else {
                 HashtagElement tmp = new HashtagElement(hashtag);
-                HashtagStoreElement<HashtagElement> tmp2 = new HashtagStoreElement<HashtagElement>(tmp2);
+                HashtagStoreElement<HashtagElement> tmp2 = new HashtagStoreElement<HashtagElement>(tmp);
                 tail.setNext(tmp2);
                 tmp2.setPrev(tail);
                 tail = tmp2;

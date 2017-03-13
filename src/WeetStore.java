@@ -172,7 +172,7 @@ public class WeetStore implements IWeetStore {
     public Weet[] getWeets() {
         // TODO 
         Weet[] tmp = new Weet[this.count];
-        WeetListElement<User> ptr = head;
+        WeetListElement<Weet> ptr = head;
         for(int i = 0; i < this.count; i++){
             tmp[i] = ptr.getValue();
             ptr = ptr.getNext();
@@ -182,16 +182,18 @@ public class WeetStore implements IWeetStore {
 
     public Weet[] getWeetsByUser(User usr) {
         // TODO
+        ArrayList<Weet> tmp = new ArrayList<>();
         int uid = usr.getId();
         int hash = hash(uid);
         WeetListElement<Weet> ptr = hashmapUserID[hash];
         while (ptr.getNext(0) != null) {
             if (ptr.getValue().getUserId()==uid) {
-                return ptr.getValue();
+                tmp.add(ptr.getValue());
             }
             ptr = ptr.getNext(0);
         }
-        return null;
+        MergeSort<Weet> tmp2 = new MergeSort<Weet>(tmp,c);
+        return tmp2.getSorted().toArray();
     }
 
     public Weet[] getWeetsContaining(String query) {
