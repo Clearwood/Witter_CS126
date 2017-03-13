@@ -112,8 +112,7 @@ public class FollowerStore implements IFollowerStore {
             Date db2 = followerStore.get(uid2).get(user_id);
             if(db2!=null){
                 Date latest = (db1.compareTo(db2)==1)? db1 : db2;
-                Integer intObj = new Integer(user);
-                KeyValuePair<Integer,Date> mutual= new KeyValuePair<Integer,Date>(intObj, latest);
+                KeyValuePair<Integer,Date> mutual= new KeyValuePair<Integer,Date>(user_id, latest);
                 unSorted.add(mutual);
             }
         }
@@ -139,8 +138,7 @@ public class FollowerStore implements IFollowerStore {
             Date db2 = followerStore.get(uid2).get(user_id);
             if(db2!=null){
                 Date latest = (db1.compareTo(db2)==1)? db1 : db2;
-                Integer intObj = new Integer(user);
-                KeyValuePair<Integer,Date> mutual= new KeyValuePair<Integer,Date>(intObj, latest);
+                KeyValuePair<Integer,Date> mutual= new KeyValuePair<Integer,Date>(user_id, latest);
                 unSorted.add(mutual);
             }
         }
