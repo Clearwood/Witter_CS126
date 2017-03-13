@@ -20,14 +20,14 @@ public class FollowerStore implements IFollowerStore {
             return a.getKey().compareTo(b.getKey());
         }
     };
-    private SortedDoublyLinkedList<Integer,Integer> mostFollowers;
+//    private SortedDoublyLinkedList<Integer,Integer> mostFollowers;
     private HashMap<Integer,HashMap<Integer,Date>> followerStore;
     private HashMap<Integer,HashMap<Integer,Date>> followStore;
 
     public FollowerStore() {
         followerStore = new HashMap<>(100003);
         followStore = new HashMap<>(100003);
-        mostFollowers = new SortedDoublyLinkedList<>();
+//        mostFollowers = new SortedDoublyLinkedList<>();
     }
 
     public boolean addFollower(int uid1, int uid2, Date followDate) {
@@ -155,13 +155,13 @@ public class FollowerStore implements IFollowerStore {
 
     public int[] getTopUsers() {
         // TODO
-        ArrayList<Integer> topUsers = mostFollowers.getKeysArrayList();
+        /*ArrayList<Integer> topUsers = mostFollowers.getKeysArrayList();
         int sizeArrayReturn = topUsers.size();
         int[] returnTopUsers = new int[sizeArrayReturn];
         for(int i=0; i<topUsers.size(); i++){
             returnTopUsers[i]=topUsers.get(i);
         }
-        return returnTopUsers;
+        return returnTopUsers;*/
     }
 
 }
