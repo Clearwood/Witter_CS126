@@ -1,7 +1,27 @@
 /**
  * Your preamble here
  *
- * @author: Your university ID
+ * @author: u1632823
+ * My FollowerStore has to be compiled exactly as both other files with the script provided which allows for multifile support
+ * which I have to credit u1503731 for. All these java files inside the src directory have to be placed inside the Witter home
+ * directory from which the multifile script has to be executed.
+ * I thought a lot about how to implement the FollowerStore, a store of
+ * connections between users.
+ * To be able to access a connection using the uid of a follower or a person being followed
+ * I created two HashMaps to be able to do exactly that from both sides in a constant time operation if the number of buckets corresponds
+ * to the number of connections to be inserted Using linked lists internally collisions will not break the code but obviously give for a higher
+ * access time. Using two nested HashMaps for each datastructure allows me to make a few operations really efficient, especially
+ * checking if somebody is a Follower or Follows the particular user_id.
+ * Using the outer HashMap allows me for a constant time lookup of the HashMap of all Followers or all Follows.
+ * Using the internal HashMap allows me the lookup of a User in constant time if the number of buckets is appropriate.
+ * To get all Followers or Follows of a particular user sorted by Date, the HashMap of all Follows or Follower of that particular
+ * user has to be retrieved. This operation is a constant time operation if the number of buckets for the outer HashMap is appropriate.
+ * I implemented a MergeSort algorithm for ArrayLists in a separate file which works with a Comparator I defined in this file.
+ * To be able to use that algorithm I have to convert the HashMap to an ArrayList using the internal function which is linear time.
+ * The MergeSort on it's on will perform with a O(n log n) time complexity regardless of the case or any structure the data is in.
+ * This HashMap being mapped over user_id ergo integers this sorted ArrayList has to be traversed again to form an int[] array by getting
+ * the keys of all KeyValuePairs in the ArrayList in order.
+ * Considering the 
  */
 
 package uk.ac.warwick.java.cs126.services;
@@ -14,17 +34,26 @@ import java.lang.*;
 import java.util.Comparator;
 
 public class FollowerStore implements IFollowerStore {
+    //defines a custom Comparator for the comparation of a KeyValuePair of type Integer, Date to be compared
+    //by their Value not their key
     Comparator<KeyValuePair<Integer,Date>> c = new Comparator<KeyValuePair<Integer,Date>>(){
         @Override
         public int compare(KeyValuePair<Integer,Date> a, KeyValuePair<Integer,Date> b){
-            return a.getKey().compareTo(b.getKey());
+            return a.getValue().compareTo(b.getValue());
         }
     };
+    //defines a Sorted Doubly Linked List to store user ids with the associated followernumber, sorted by the latter for quick
+    //access
     private SortedDoublyLinkedList<Integer,Integer> mostFollowers;
+    //defines a HashMao for the store of followers mapped over the user id. The value of this
+    //HashMap of all followers mapped by User ID with the Dates they followed on listed as a value of the HashMap
     private HashMap<Integer,HashMap<Integer,Date>> followerStore;
+    //defines a HashMao for the store of follows mapped over the user id. The value of this
+    //HashMap of all follows mapped by User ID with the Dates the user followed those users on listed as a value of the HashMap
     private HashMap<Integer,HashMap<Integer,Date>> followStore;
 
     public FollowerStore() {
+        //defining the size
         followerStore = new HashMap<>(100003);
         followStore = new HashMap<>(100003);
        mostFollowers = new SortedDoublyLinkedList<>();

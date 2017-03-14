@@ -84,14 +84,18 @@ public class HashMap<K extends Comparable<K>,V> implements IMap<K,V> {
         int location = (hash_code % BucketAmount+ BucketAmount)%BucketAmount;
 
         System.out.println("Adding " + value + " under key " + key + " at location " + location);
-
+        //adds the key and value to the KeyValuePairLinked List at the given bucket
         table[location].add(key,value);
     }
-
+    //gives back the Value for a given key
     public V get(K key) {
+        //hashes key
         int hash_code = hash(key);
+        //uses modulo to generate a non negative bucket
         int location = (hash_code % BucketAmount+ BucketAmount)%BucketAmount;
+        //gets back the head of the bucket
         ListElement<KeyValuePair> ptr = table[location].head;
+        //if that one is empty does not try any further access
         if(table[location].get(key)==null){
             return null;
         } else {
