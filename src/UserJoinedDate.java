@@ -1,4 +1,5 @@
 package uk.ac.warwick.java.cs126.services;
+//class to compare two Users
 public class UserJoinedDate implements Comparator<User> {
     public int compare(User p, User q) {
         if (p.getDateJoined().before(q.getDateJoined()) {

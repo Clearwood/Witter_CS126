@@ -1,6 +1,7 @@
 package uk.ac.warwick.java.cs126.services;
 /**
  * An interface for a generic list.
+ * Taken from CS126 labwork
  */
 public interface IList<E> {
 

@@ -1,4 +1,5 @@
 package uk.ac.warwick.java.cs126.services;
+//adopted from labwork credit to my partner
 public class WeetListElement<E> {
     private final E value;
     private WeetListElement<E> next;

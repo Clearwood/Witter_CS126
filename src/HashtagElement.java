@@ -1,4 +1,5 @@
 package uk.ac.warwick.java.cs126.services;
+//an element to store a Hashtag and its occurences
 public class HashtagElement{
     private final String hashtag;
     private int occurence;

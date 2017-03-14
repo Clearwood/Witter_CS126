@@ -2,6 +2,7 @@ package uk.ac.warwick.java.cs126.services;
 /**
  * Element of a singly linked-list holds Strings as data elements
  */
+//adopted from labwork, which is why i have to credit my partner here as well
 public class MyLinkedListElement<E> {
 
     private E value;

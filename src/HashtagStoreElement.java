@@ -1,4 +1,6 @@
 package uk.ac.warwick.java.cs126.services;
+//simple Doubly Linked List Element
+//developed during a CS126 lab which is why i have to give my partner Aaron Baw credit for this as well
 public class HashtagStoreElement<E> {
     private final E value;
     private HashtagStoreElement<E> next;

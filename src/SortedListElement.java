@@ -1,4 +1,6 @@
 package uk.ac.warwick.java.cs126.services;
+//element for the sorted doubly linked list
+//adopted from labwork credit to my partner
 public class SortedListElement<E> {
     private final E value;
     private SortedListElement<E> next;

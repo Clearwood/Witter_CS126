@@ -1,6 +1,7 @@
 package uk.ac.warwick.java.cs126.services;
 /**
  * An interface for a generic map, from keys of type K to values of type V.
+ * Taken from CS126 labwor
  */
 public interface IMap<K,V> {
 

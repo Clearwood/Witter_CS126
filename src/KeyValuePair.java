@@ -1,4 +1,8 @@
 package uk.ac.warwick.java.cs126.services;
+//KeyValuePair Store
+/*
+adopted from labwork which is why I have to credit my partner
+ */
 public class KeyValuePair<K extends Comparable<K>,V> implements Comparable<KeyValuePair<K,V>> {
 
     protected K key;

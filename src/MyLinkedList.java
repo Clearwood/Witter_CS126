@@ -2,6 +2,7 @@ package uk.ac.warwick.java.cs126.services;
 /**
 * A generic implementation of the IList iterface, that uses LinkElements.
 */
+//adopted from labwork, which is why i have to credit my partner here as well
 public class MyLinkedList<E> implements IList<E> {
 
     MyLinkedListElement<E> head;
@@ -11,7 +12,7 @@ public class MyLinkedList<E> implements IList<E> {
         this.count = 0;
     }
 
-    // INCOMPLETE.
+
     public boolean isEmpty() {
         // Returns whether the list is empty.
         return (this.size()==0);

@@ -1,5 +1,6 @@
 package uk.ac.warwick.java.cs126.services;
 //this file provies a general KeyValuePairLinkedList
+//adopted from labwork which is why I have to credit my partner
 public class KeyValuePairLinkedList<K extends Comparable<K>,V> {
 //pointer to the head of the list
     protected ListElement<KeyValuePair<K,V>> head;

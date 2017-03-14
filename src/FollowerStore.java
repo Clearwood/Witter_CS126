@@ -21,7 +21,15 @@
  * The MergeSort on it's on will perform with a O(n log n) time complexity regardless of the case or any structure the data is in.
  * This HashMap being mapped over user_id ergo integers this sorted ArrayList has to be traversed again to form an int[] array by getting
  * the keys of all KeyValuePairs in the ArrayList in order.
- * Considering the 
+ * Considering both Mutual functions, getMutualFollowers() and getMutualFollows() I first compared every entry in both internal HashMaps
+ * of both users. Looking on that I soon realized that this was not very effective. Knowing that getting a User with the Date the connection
+ * was made from an internal HashMap is a constant time operation I only transformed one HashMap containing all Followers or Follows into an ArrayList,
+ * checking if each of those Users was also a Key in the other HashMap. Comparing the dates on both connections I could easily only add the latest date
+ * to an ArrayList as a Value for the user to be the Key, so I could use my MergeSort class in a following step to sort everything.
+ * To make the topUser function efficient I though quiet some time about whether to implement a search function which would
+ * iterate through the Follower HashMap and take the size of the inner HashMaps into an ArrayList which I then would sort. This
+ * proved to be quiet inefficient so I implemented a dedicated datastructure for that purpose which would update each time a user would get
+ * a new Follower. This doubly linked list can than be easily transformed into an Array on call.
  */
 
 package uk.ac.warwick.java.cs126.services;
@@ -61,11 +69,14 @@ public class FollowerStore implements IFollowerStore {
 
     public boolean addFollower(int uid1, int uid2, Date followDate) {
         // TODO
+        //if this user is already in the data structure of mostFollowers the number of Followers should be increased by one
         if(!mostFollowers.add(uid2,1)){
             int followers=mostFollowers.getValue(uid2);
             mostFollowers.updateValue(uid2, followers+1);
         }
+        //getting the HashMap of all Followers for the specified user
         HashMap<Integer,Date> tmp = followerStore.get(uid2);
+        //if that data structure is not yet initialized it is initialized here
         if(tmp==null){
             /*
             According to this website (http://expandedramblings.com/index.php/march-2013-by-the-numbers-a-few-amazing-twitter-stats/)
@@ -73,12 +84,21 @@ public class FollowerStore implements IFollowerStore {
             was a value I could orientate the number of buckets for my hashmap around
              */
             HashMap<Integer,Date> tmp2 = new HashMap<Integer,Date>(211);
+            //add the user which followed and the date of the connection to the internal HashMap
             tmp2.add(uid1,followDate);
+            //adding the internal hashmap on the User which was followed
             followerStore.add(uid2,tmp2);
         } else{
+            //if a connection already exists nothing should be added
+            if(tmp.get(uid1)!=null){
+                return false;
+            }
+            //if the HashMap already exists the user wich followed and the date should be added
             tmp.add(uid1, followDate);
         }
+        //get the store of all Follows for the specified user
         HashMap<Integer,Date> temp = followStore.get(uid1);
+        //if that data structure is not yet initialized it is initialized here
         if(temp==null){
             /*
             According to this website (http://expandedramblings.com/index.php/march-2013-by-the-numbers-a-few-amazing-twitter-stats/)
@@ -86,19 +106,30 @@ public class FollowerStore implements IFollowerStore {
             was a value I could orientate the number of buckets for my hashmap around
              */
             HashMap<Integer,Date> tmp2 = new HashMap<Integer,Date>(211);
+            //add the user the user just followed and the date of the connection to the internal HashMap
             tmp2.add(uid2,followDate);
+            //adding the internal hashmap on the User
             followStore.add(uid1,tmp2);
         } else{
+            //if a connection exists nothing should be added
+            if(temp.get(uid2)!=null){
+                return false;
+            }
+            //if the HashMap already exists the newly followed user and the date should be added
             temp.add(uid2, followDate);
         }
         return true;
     }  
 
     public int[] getFollowers(int uid) {
-        // TODO 
+        // TODO
+        //getting an ArrayList of all Followers of the user from the followerStore HashMap
         ArrayList<KeyValuePair<Integer,Date>> tmp = followerStore.get(uid).getArray();
+        //using MergeSort on this ArrayList
         MergeSort<KeyValuePair<Integer,Date>> tmp2 = new MergeSort<KeyValuePair<Integer,Date>>(tmp,c);
+        //returning the Sorted List
         ArrayList<KeyValuePair<Integer,Date>> Sorted = tmp2.getSorted();
+        //getting the keys from the Array
         int[] returnArray = new int[Sorted.size()];
 
         for(int i = 0; i < Sorted.size(); i++){
@@ -108,10 +139,13 @@ public class FollowerStore implements IFollowerStore {
     }
 
     public int[] getFollows(int uid) {
-        // TODO
+        //getting an ArrayList of all Followers of the user from the followerStore HashMap
         ArrayList<KeyValuePair<Integer,Date>> tmp = followStore.get(uid).getArray();
+        //using MergeSort on this ArrayList
         MergeSort<KeyValuePair<Integer,Date>> tmp2 = new MergeSort<KeyValuePair<Integer,Date>>(tmp,c);
+        //returning the Sorted List
         ArrayList<KeyValuePair<Integer,Date>> Sorted = tmp2.getSorted();
+        //getting the keys from the Array
         int[] returnArray = new int[Sorted.size()];
 
         for(int i = 0; i < Sorted.size(); i++){
@@ -122,18 +156,22 @@ public class FollowerStore implements IFollowerStore {
 
     public boolean isAFollower(int uidFollower, int uidFollows) {
         // TODO
+        //using the internal HashMap function isKey to determine if the relationship exists
         return followerStore.get(uidFollower).isKey(uidFollows);
     }
 
     public int getNumFollowers(int uid) {
-        // TODO 
+        // TODO
+        //get the size of the HashMap to determine how many Followers exists
         return followerStore.get(uid).size();
     }
 
     public int[] getMutualFollowers(int uid1, int uid2) {
         // TODO
+        //turning one of the internal hashMaps into a ArrayList
         ArrayList<KeyValuePair<Integer,Date>> tmp = followerStore.get(uid1).getArray();
         ArrayList<KeyValuePair<Integer,Date>> unSorted = new ArrayList<>();
+        //traversing over that ArrayList and checking for each element if it exists in the other internal HashMap
         for(int i=0; i<tmp.size();i++){
             KeyValuePair<Integer,Date> user = tmp.get(i);
             int user_id = (int) user.getKey();
@@ -145,10 +183,11 @@ public class FollowerStore implements IFollowerStore {
                 unSorted.add(mutual);
             }
         }
+        //using MergeSort for Sorting on Date
         MergeSort<KeyValuePair<Integer,Date>> tmp2 = new MergeSort<KeyValuePair<Integer,Date>>(unSorted,c);
         ArrayList<KeyValuePair<Integer,Date>> Sorted = tmp2.getSorted();
         int[] returnArray = new int[Sorted.size()];
-
+        //getting the keys back ergo an array of user ids
         for(int i = 0; i < Sorted.size(); i++){
             returnArray[i] = (int) Sorted.get(i).getKey();
         }
@@ -157,9 +196,11 @@ public class FollowerStore implements IFollowerStore {
     }
 
     public int[] getMutualFollows(int uid1, int uid2) {
-        // TODO 
+        // TODO
+        //turning one of the internal hashMaps into a ArrayList
         ArrayList<KeyValuePair<Integer,Date>> tmp = followStore.get(uid1).getArray();
         ArrayList<KeyValuePair<Integer,Date>> unSorted = new ArrayList<>();
+        //traversing over that ArrayList and checking for each element if it exists in the other internal HashMap
         for(int i=0; i<tmp.size();i++){
             KeyValuePair<Integer,Date> user = tmp.get(i);
             int user_id = (int) user.getKey();
@@ -171,10 +212,11 @@ public class FollowerStore implements IFollowerStore {
                 unSorted.add(mutual);
             }
         }
+        //using MergeSort for Sorting on Date
         MergeSort<KeyValuePair<Integer,Date>> tmp2 = new MergeSort<KeyValuePair<Integer,Date>>(unSorted,c);
         ArrayList<KeyValuePair<Integer,Date>> Sorted = tmp2.getSorted();
         int[] returnArray = new int[Sorted.size()];
-
+        //getting the keys back ergo an array of user ids
         for(int i = 0; i < Sorted.size(); i++){
             returnArray[i] = (int) Sorted.get(i).getKey();
         }
@@ -183,9 +225,10 @@ public class FollowerStore implements IFollowerStore {
     }
 
     public int[] getTopUsers() {
-        // TODO
+        //getting the topUsers as an ArrayList
         ArrayList<Integer> topUsers = mostFollowers.getKeysArrayList();
         int sizeArrayReturn = topUsers.size();
+        //turning ArrayList into Array
         int[] returnTopUsers = new int[sizeArrayReturn];
         for(int i=0; i<topUsers.size(); i++){
             returnTopUsers[i]=topUsers.get(i);

@@ -1,5 +1,6 @@
 package uk.ac.warwick.java.cs126.services;
 import java.util.Comparator;
+//generic mergesort
 public class MergeSort<E> {
 
     private ArrayList<E> strList;
@@ -17,67 +18,65 @@ public class MergeSort<E> {
     public ArrayList<E> mergeSort(ArrayList<E> whole) {
         ArrayList<E> left = new ArrayList<E>();
         ArrayList<E> right = new ArrayList<E>();
-        int center;
+        int centerElement;
 
         if (whole.size() == 1) {
             return whole;
         } else {
-            center = whole.size()/2;
-            // copy the left half of whole into the left.
-            for (int i=0; i<center; i++) {
-                left.add(whole.get(i));
-            }
-
-            //copy the right half of whole into the new arraylist.
-            for (int i=center; i<whole.size(); i++) {
+            centerElement = whole.size()/2;
+            //copies the right part of the array in to the right arraylist
+            for (int i=centerElement; i<whole.size(); i++) {
                 right.add(whole.get(i));
             }
-
-            // Sort the left and right halves of the arraylist.
-            left  = mergeSort(left);
+            //copies the left part of the array into the left arraylist
+            for (int i=0; i<centerElement; i++) {
+                left.add(whole.get(i));
+            }
+            //sort right part of arraylist
             right = mergeSort(right);
+            // Sort left part of arraylist
+            left  = mergeSort(left);
 
-            // Merge the results back together.
+            // merge everything back together
             merge(left, right, whole);
         }
         return whole;
     }
 
     private void merge(ArrayList<E> left, ArrayList<E> right, ArrayList<E> whole) {
-        int leftIndex = 0;
-        int rightIndex = 0;
-        int wholeIndex = 0;
+        int IndexLeft = 0;
+        int IndexRight = 0;
+        int IndexWhole = 0;
 
-        // As long as neither the left nor the right ArrayList has
-        // been used up, keep taking the smaller of left.get(leftIndex)
-        // or right.get(rightIndex) and adding it at both.get(bothIndex).
-        while (leftIndex < left.size() && rightIndex < right.size()) {
-            if ( c.compare(left.get(leftIndex),right.get(rightIndex)) > 0) {
-                whole.set(wholeIndex, left.get(leftIndex));
-                leftIndex++;
+        //while both arraylists are not empty get the larger value
+        //of the two and copy it to the whole array
+        while (IndexLeft < left.size() && IndexRight < right.size()) {
+            if ( c.compare(left.get(IndexLeft),right.get(IndexRight)) > 0) {
+                whole.set(IndexWhole, left.get(IndexLeft));
+                IndexLeft++;
             } else {
-                whole.set(wholeIndex, right.get(rightIndex));
-                rightIndex++;
+                whole.set(IndexWhole, right.get(IndexRight));
+                IndexRight++;
             }
             wholeIndex++;
         }
 
         ArrayList<E> rest;
         int restIndex;
-        if (leftIndex >= left.size()) {
-            // The left ArrayList has been use up...
+        if (IndexLeft >= left.size()) {
+            // The left arraylist is empty
             rest = right;
-            restIndex = rightIndex;
+            restIndex = IndexRight;
         } else {
-            // The right ArrayList has been used up...
+            //the right arraylist is empty
             rest = left;
-            restIndex = leftIndex;
+            restIndex = IndexLeft;
         }
 
-        // Copy the rest of whichever ArrayList (left or right) was not used up.
+        // Copy the rest of the arraylist which has not been used up yet to the rest arraylist
         for (int i=restIndex; i<rest.size(); i++) {
-            whole.set(wholeIndex, rest.get(i));
-            wholeIndex++;
+            whole.set(IndexWhole, rest.get(i));
+            IndexWhole++;
         }
     }
 }
