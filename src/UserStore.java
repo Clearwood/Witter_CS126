@@ -2,7 +2,7 @@
  * Your preamble here
  *
  * @author: u1632823
- * My FollowerStore has to be compiled exactly as both other files with the script provided which allows for multifile support
+ * My UserStore has to be compiled exactly as both other files with the script provided which allows for multifile support
  * which I have to credit u1503731 for. All these java files inside the src directory have to be placed inside the Witter home
  * directory from which the multifile script has to be executed.
  * The UserStore is something which I took great consideration in how I could possible get the best solution.
@@ -11,7 +11,7 @@
  * that the insertion may be a linear insertion
  * time. But because the input is already fairly sorted, the process user registration means that the database will be hit mostly
  * by Dates for UserJoined which will follow each other or at least will be not too far apart which means in practise the
- * insertion time will always never be linear because I am checking the Date values of the head of the Doubly Linked List first.
+ * insertion time will almost never be linear because I am checking the Date values of the head of the Doubly Linked List first.
  * Profiting from this design decision are the getUsers() function which just has to transform the doubly linked list into an array
  * and also the UsersJoinedBefore() because the tail element is the earliest joined User so I just have to traverse the doubly linked
  * list back until the Date on which the User joined is after the Date indicated and to mergesort this ArrayList of Users, meaning
