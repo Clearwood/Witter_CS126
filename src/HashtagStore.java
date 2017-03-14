@@ -24,7 +24,7 @@ public class HashtagStore{
         //linear search if such a hashtag already exists
         HashtagStoreElement<HashtagElement> ptr = head;
         while(ptr != null){
-            if(ptr.getValue().getHashtag()==hashtag){
+            if(ptr.getValue().getHashtag().equals(hashtag)){
                 return ptr;
             }
             ptr = ptr.getNext();
@@ -34,7 +34,7 @@ public class HashtagStore{
     public String getHashtag(int index) {
         // Gets the element at index in the list by using linear traversal
         HashtagStoreElement<HashtagElement> ptr = head;
-        for (int i=size()-1;i>index;i--) {
+        for(int i=0;i<index;i++){
             ptr = ptr.getNext();
         }
         return ptr.getValue().getHashtag();
@@ -58,6 +58,14 @@ public class HashtagStore{
     }
     //adds hashtags to the store
     public boolean add(String hashtag){
+        System.err.println(find("#10")!=null);
+        String[] first10 = getFirst10();
+        System.err.println("");
+        for(int i=0;i<10;i++){
+            System.err.print(first10[i]+", ");
+        }
+        System.err.println("");
+        System.err.println("string: "+hashtag);
         //checks if store is empty
         if(isEmpty()){
             //creates an HashTagElement
@@ -66,13 +74,17 @@ public class HashtagStore{
             HashtagStoreElement<HashtagElement> tmp2 = new HashtagStoreElement<HashtagElement>(tmp);
             head = tmp2;
             tail = tmp2;
+            size++;
         } else {
             //checks if the hashtag is already in store
             HashtagStoreElement<HashtagElement> find = find(hashtag);
             //if hashtag is in list
             if(find != null){
+                System.err.println("hashtag: "+hashtag+"is in list");
                 //increases internal occurence counter
+                System.err.println("occurence before: "+find(hashtag).getValue().getOccurence()+"is in list");
                 find.getValue().updateOccurence();
+                System.err.println("occurence after: "+find(hashtag).getValue().getOccurence()+"is in list");
                 if(find!=head) {
                     //gets the number of occurences of the element
                     int occurenceToAdd = find.getValue().getOccurence();
