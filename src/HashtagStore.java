@@ -124,7 +124,7 @@ public class HashtagStore{
                     return true;
                 }
             } else {
-                //if a hashtag is newly inserted it cannot have more occurences than anything before
+                 //if a hashtag is newly inserted it cannot have more occurences than anything before
                 //so it is inserted at the very end of the list
                 HashtagElement tmp = new HashtagElement(hashtag);
                 HashtagStoreElement<HashtagElement> tmp2 = new HashtagStoreElement<HashtagElement>(tmp);
