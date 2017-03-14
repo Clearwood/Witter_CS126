@@ -86,10 +86,11 @@ public class HashtagStore{
                         //if the hashtags occures more than the hashtag to the left of it update the previous and next element
                         //of the hashtag which was updated
                         ptr.setNext(find.getNext());
-                        find.getNext().setPrev(ptr);
                         //if the element updated was previously the tail element the tail has to be updated
                         if(find==tail){
                             tail = find.getPrev();
+                        } else{
+                            find.getNext().setPrev(ptr);
                         }
                         //traverse until either the head is reached or the hashtag on the left has  more occurences
                         if (ptr != head) {
