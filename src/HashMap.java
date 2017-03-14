@@ -7,12 +7,14 @@ public class HashMap<K extends Comparable<K>,V> implements IMap<K,V> {
 
     protected KeyValuePairLinkedList[] table;
     private int size = 0;
+    private final int BucketAmount;
     public HashMap() {
         /* for very simple hashing, primes reduce collisions */
         this(11);
     }
 
     public HashMap(int size) {
+        BucketAmount = size;
         initTable(size);
     }
 
@@ -76,8 +78,7 @@ public class HashMap<K extends Comparable<K>,V> implements IMap<K,V> {
 
     public V get(K key) {
         int hash_code = hash(key);
-        int location = hash_code % table.length;
-
+        int location = hash_code % BucketAmount;
         ListElement<KeyValuePair> ptr = table[location].head;
         if(table[location].get(key)==null){
             return null;
