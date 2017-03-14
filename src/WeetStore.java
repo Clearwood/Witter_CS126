@@ -30,9 +30,9 @@ public class WeetStore implements IWeetStore {
     private HashtagStore hashtagStore;
     private HashMap<String, ArrayList<Weet>> messageStore;
     private final int hashMapSize;
-    private WeetListElement<Weet>[] hashmapWeetID;
-    private WeetListElement<Weet>[] hashmapUserID;
-    private WeetListElement<Weet>[] hashmapDate;
+    private Object[] hashmapWeetID;
+    private Object[] hashmapUserID;
+    private Object[] hashmapDate;
 
     Comparator<Weet> c = new Comparator<Weet>(){
         @Override
@@ -44,13 +44,25 @@ public class WeetStore implements IWeetStore {
     public WeetStore() {
         hashMapSize=100003;
         messageStore = new HashMap<String, ArrayList<Weet>>(hashMapSize);
-        hashmapWeetID = (WeetListElement<Weet>[]) new Object[hashMapSize];
-        hashmapUserID = (WeetListElement<Weet>[]) new Object[hashMapSize];
-        hashmapDate = (WeetListElement<Weet>[]) new Object[hashMapSize];
+        hashmapWeetID = new Object[hashMapSize];
+        hashmapUserID = new Object[hashMapSize];
+        hashmapDate = new Object[hashMapSize];
         head = null;
         tail = null;
         this.count = 0;
         hashtagStore = new HashtagStore();
+    }
+    @SuppressWarnings("unchecked")
+    public WeetListElement<Weet> getHashMapUser(int index) {
+        return (WeetListElement<Weet>) this.hashmapUserID[index];
+    }
+    @SuppressWarnings("unchecked")
+    public WeetListElement<Weet> getHashMapWeet(int index) {
+        return (WeetListElement<Weet>) this.hashmapWeetID[index];
+    }
+    @SuppressWarnings("unchecked")
+    public WeetListElement<Weet> getHashMapDate(int index) {
+        return (WeetListElement<Weet>) this.hashmapDate[index];
     }
     public boolean isEmpty() {
         return (head == null) || (tail == null);
@@ -82,7 +94,7 @@ public class WeetStore implements IWeetStore {
     public boolean addToHashMapUID(WeetListElement<Weet> u){
         int hash = hash(u.getValue().getUserId());
         if(hashmapUserID[hash]!=null){
-            u.addNext(hashmapUserID[hash]);
+            u.addNext(getHashMapUser(hash));
         }
         hashmapUserID[hash]=u;
         return true;
@@ -90,7 +102,7 @@ public class WeetStore implements IWeetStore {
     public boolean addToHashMapWeetID(WeetListElement<Weet> u){
         int hash = hash(u.getValue().getId());
         if(hashmapWeetID[hash]!=null){
-            u.addNext(hashmapWeetID[hash]);
+            u.addNext(getHashMapWeet(hash));
         }
         hashmapWeetID[hash]=u;
         return true;
@@ -99,7 +111,7 @@ public class WeetStore implements IWeetStore {
         Date date= u.getValue().getDateWeeted();
         int hash = dateToHash(date);
         if(hashmapDate[hash]!=null){
-            u.addNext(hashmapDate[hash]);
+            u.addNext(getHashMapDate(hash));
         }
         hashmapDate[hash]=u;
         return true;
@@ -162,8 +174,8 @@ public class WeetStore implements IWeetStore {
     public Weet getWeet(int wid) {
         // TODO
         int hash = hash(wid);
-        WeetListElement<Weet> ptr = hashmapWeetID[hash];
-        while (ptr.getNext(1) != null) {
+        WeetListElement<Weet> ptr = getHashMapWeet(hash);
+        while (ptr != null) {
             if (ptr.getValue().getId()==wid) {
                 return ptr.getValue();
             }
@@ -188,8 +200,8 @@ public class WeetStore implements IWeetStore {
         ArrayList<Weet> tmp = new ArrayList<>();
         int uid = usr.getId();
         int hash = hash(uid);
-        WeetListElement<Weet> ptr = hashmapUserID[hash];
-        while (ptr.getNext(0) != null) {
+        WeetListElement<Weet> ptr = getHashMapUser(hash);
+        while (ptr != null) {
             if (ptr.getValue().getUserId()==uid) {
                 tmp.add(ptr.getValue());
             }
@@ -222,8 +234,8 @@ public class WeetStore implements IWeetStore {
         // TODO
         ArrayList<Weet> tmp = new ArrayList<>();
         int hash = dateToHash(dateOn);
-        WeetListElement<Weet> ptr = hashmapDate[hash];
-        while (ptr.getNext(2) != null) {
+        WeetListElement<Weet> ptr = getHashMapDate(hash);
+        while (ptr != null) {
             if (dateToHash(ptr.getValue().getDateWeeted())==hash) {
                  tmp.add(ptr.getValue());
             }
@@ -235,7 +247,7 @@ public class WeetStore implements IWeetStore {
 
     public Weet[] getWeetsBefore(Date dateBefore) {
         // TODO
-        MyLinkedList<Weet> WeetsBefore = new MyLinkedList<>();
+        ArrayList<Weet> WeetsBefore = new ArrayList<Weet>();
         WeetListElement<Weet> ptr = tail;
         while(ptr != null && ptr.getValue().getDateWeeted().before(dateBefore)) {
             WeetsBefore.add(ptr.getValue());

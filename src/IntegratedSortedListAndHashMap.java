@@ -6,16 +6,20 @@ public class IntegratedSortedListAndHashMap {
 
     private ListElement<User> head;
     private ListElement<User> tail;
-    private ListElement<User>[] hashmapUserID;
+    private Object[] hashmapUserID;
     private int hashMapSize;
     private int count;
     public IntegratedSortedListAndHashMap() {
         //usage of primes reduces number of collisions
         hashMapSize=100003;
-        hashmapUserID = new ListElement[hashMapSize];
+        hashmapUserID = new Object[hashMapSize];
         head = null;
         tail = null;
         this.count = 0;
+    }
+    @SuppressWarnings("unchecked")
+    public ListElement<User> getHashMapUser(int index) {
+        return (ListElement<User>) this.hashmapUserID[index];
     }
     public int size() {
         return this.count;
@@ -23,8 +27,8 @@ public class IntegratedSortedListAndHashMap {
     public boolean add(User user){
         ListElement<User> u = new ListElement<User>(user);
         int hash = hash(user.getId());
-        if(hashmapUserID[hash]!=null){
-            u.setNextID(hashmapUserID[hash]);
+        if(getHashMapUser(hash)!=null){
+            u.setNextID(getHashMapUser(hash));
         }
         hashmapUserID[hash]=u;
         if(isEmpty()){
@@ -82,7 +86,7 @@ public class IntegratedSortedListAndHashMap {
     }
     public User getByID(int uid){
         int hash = hash(uid);
-        ListElement<User> ptr = hashmapUserID[hash];
+        ListElement<User> ptr = getHashMapUser(hash);
         while (ptr.getNextID() != null) {
             if (ptr.getValue().getId()==uid) {
                 return ptr.getValue();

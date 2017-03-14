@@ -1,6 +1,0 @@
-.\uk\ac\warwick\java\cs126\services\MyLinkedList.java:74: error: generic array creation
-        E[] tmp = new E[this.size()];
-                  ^
-Note: .\uk\ac\warwick\java\cs126\services\ArrayList.java uses unchecked or unsafe operations.
-Note: Recompile with -Xlint:unchecked for details.
-1 error
