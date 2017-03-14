@@ -1,12 +1,17 @@
 package uk.ac.warwick.java.cs126.services;
-
+/*
+This file was originally edited during a CS126 lab. Therefore I have to credit my Partner Aaron Baw for part of the code.
+ */
 // This line allows us to cast our object to type (E) without any warnings.
 // For further detais, please see: http://docs.oracle.com/javase/1.5.0/docs/api/java/lang/SuppressWarnings.html
 @SuppressWarnings("unchecked")
 public class HashMap<K extends Comparable<K>,V> implements IMap<K,V> {
-
+    //the hashmap maps a key value pair
+    //an array of linked list key value pair is used for the buckets
     protected KeyValuePairLinkedList[] table;
-    private int size = 0;
+    //this integer can be used to easily access the size of the hashmap
+    private int size;
+    //an integer to track the amount of buckets the hashmap posseses
     private final int BucketAmount;
     public HashMap() {
         /* for very simple hashing, primes reduce collisions */
@@ -15,6 +20,7 @@ public class HashMap<K extends Comparable<K>,V> implements IMap<K,V> {
 
     public HashMap(int size) {
         BucketAmount = size;
+        this.size = 0;
         initTable(size);
     }
 
@@ -78,7 +84,7 @@ public class HashMap<K extends Comparable<K>,V> implements IMap<K,V> {
 
     public V get(K key) {
         int hash_code = hash(key);
-        int location = hash_code % BucketAmount;
+        int location = (hash_code % BucketAmount+ BucketAmount)%BucketAmount;
         ListElement<KeyValuePair> ptr = table[location].head;
         if(table[location].get(key)==null){
             return null;
