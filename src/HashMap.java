@@ -17,14 +17,13 @@ public class HashMap<K extends Comparable<K>,V> implements IMap<K,V> {
         /* for very simple hashing, primes reduce collisions */
         this(11);
     }
-
+    //initializes hashmap with a specific amount of buckets
     public HashMap(int size) {
         BucketAmount = size;
         this.size = 0;
         initTable(size);
     }
 
-    // INCOMPLETE.
     public int find(K key) {
         //returns the number of comparisons required to find element using Linear Search.
         int count = 1;
@@ -35,6 +34,7 @@ public class HashMap<K extends Comparable<K>,V> implements IMap<K,V> {
 
         return table[location].get(key, count);
     }
+    //returns an arraylist of all KeyValuePairs inside the hashmap
     public ArrayList<KeyValuePair<K,V>> getArray(){
         ArrayList<KeyValuePair<K,V>> tmp = new ArrayList<>();
         for(int i = 0; i < table.length; i++) {
@@ -46,6 +46,7 @@ public class HashMap<K extends Comparable<K>,V> implements IMap<K,V> {
         }
         return tmp;
     }
+    //check if a key given as a parameter truly is a key in the hashmap
     public boolean isKey(K key){
         int hash_code = hash(key);
         int location = hash_code % table.length;
@@ -57,25 +58,30 @@ public class HashMap<K extends Comparable<K>,V> implements IMap<K,V> {
             return true;
         }
     }
+    //initializes the hashmap with empty KeyValuePairLinkedLists
     protected void initTable(int size) {
         table = new KeyValuePairLinkedList[size];
         for(int i = 0; i < table.length; i++) {
             table[i] = new KeyValuePairLinkedList<>();
         }
     }
-
+    //uses the internal hashcode of a key element to generate the hash
     protected int hash(K key) {
         int code = key.hashCode();
         return code;
     }
+    //returns the size variable of the hashmap
     public int size(){
         return this.size;
     }
-
+    //adds a KeyValuePair to the HashMap
     public void add(K key, V value) {
+        //increases size accordingly
         size++;
+        //hashes key
         int hash_code = hash(key);
-        int location = hash_code % table.length;
+        //uses modulo to generate a non negative bucket
+        int location = (hash_code % BucketAmount+ BucketAmount)%BucketAmount;
 
         System.out.println("Adding " + value + " under key " + key + " at location " + location);
 
