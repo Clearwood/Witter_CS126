@@ -426,7 +426,7 @@ class WeetTests {
       Weet weet8 = new Weet(8,3,"#8",createDate("01/01/14 23:21"));
       Weet weet9 = new Weet(9,4,"#9",createDate("01/01/14 23:21"));
       Weet weet10 = new Weet(10,5,"#10",createDate("01/01/14 23:21"));
-      Weet weet11 = new Weet(11,4,"#11",createDate("01/01/14 23:21"));
+      Weet weet11 = new Weet(11,4,"#10",createDate("01/01/14 23:21"));
       Weet weet12 = new Weet(12,5,"#12",createDate("01/01/14 23:21"));
 
       weetStore.addWeet(weet10);
@@ -449,7 +449,9 @@ class WeetTests {
 	System.out.println("Here!");
         return false;
       }
-
+        if(!result[0].equals("#10")){
+            return false;
+        }
       /*for (int i=0;i<result.length;i++)
       {
         if (result[i]==null)

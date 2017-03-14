@@ -117,7 +117,8 @@ public class WeetStore implements IWeetStore {
         Pattern MY_PATTERN = Pattern.compile("#(\\S+)");
         Matcher mat = MY_PATTERN.matcher(message);
         while (mat.find()) {
-            hashtagStore.add(mat.group(1));
+            String toAdd = "#" + mat.group(1);
+            hashtagStore.add(toAdd);
         }
     }
     //hashes integers

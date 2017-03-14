@@ -167,8 +167,8 @@ public class FollowerStore implements IFollowerStore {
     public boolean isAFollower(int uidFollower, int uidFollows) {
         // TODO
         //using the internal HashMap function isKey to determine if the relationship exists
-        if(followerStore.get(uidFollower)!=null) {
-            return followerStore.get(uidFollower).isKey(uidFollows);
+        if(followerStore.get(uidFollows)!=null) {
+            return followerStore.get(uidFollows).isKey(uidFollower);
         }
         return false;
     }
