@@ -84,6 +84,7 @@ public class SortedDoublyLinkedList<K extends Comparable<K>,V extends Comparable
                                     //insert it at this position
                                     ptr.setPrev(ptr2);
                                     ptr.setNext(ptr2.getNext());
+                                    ptr2.getNext().setPrev(ptr);
                                     ptr2.setNext(ptr);
                                     this.count++;
                                     return true;
@@ -124,6 +125,7 @@ public class SortedDoublyLinkedList<K extends Comparable<K>,V extends Comparable
                                     //insert it at this position
                                     ptr.setPrev(ptr2);
                                     ptr.setNext(ptr2.getNext());
+                                    ptr2.getNext().setPrev(ptr);
                                     ptr2.setNext(ptr);
                                     this.count++;
                                     return true;
@@ -199,6 +201,7 @@ public class SortedDoublyLinkedList<K extends Comparable<K>,V extends Comparable
                     //insert it at this position
                     tmp2.setPrev(ptr);
                     tmp2.setNext(ptr.getNext());
+                    ptr.getNext().setPrev(tmp2);
                     ptr.setNext(tmp2);
                     this.count++;
                     return true;
@@ -237,6 +240,7 @@ public class SortedDoublyLinkedList<K extends Comparable<K>,V extends Comparable
                     //insert it at this position
                     tmp2.setPrev(ptr);
                     tmp2.setNext(ptr.getNext());
+                    ptr.getNext().setPrev(tmp2);
                     ptr.setNext(tmp2);
                     this.count++;
                     return true;
@@ -259,7 +263,6 @@ public class SortedDoublyLinkedList<K extends Comparable<K>,V extends Comparable
             head=tmp2;
             return true;
         }
-        return false;
     }
 
 }

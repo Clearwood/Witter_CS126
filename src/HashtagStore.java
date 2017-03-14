@@ -95,6 +95,7 @@ public class HashtagStore{
                                 if (ptr.getValue().getOccurence() > occurenceToAdd) {
                                     //insert element after the hashtag which has more occurences
                                     find.setNext(ptr.getNext());
+                                    ptr.getNext().setPrev(find);
                                     find.setPrev(ptr);
                                     ptr.setNext(find);
                                     return true;

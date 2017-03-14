@@ -38,6 +38,10 @@ public class IntegratedSortedListAndHashMap {
         return this.count;
     }
     public boolean add(User user){
+        if(getByID(user.getId())!=null){
+            return false;
+        }
+        this.count++;
         //creates a ListElement from the User inputted
         ListElement<User> u = new ListElement<User>(user);
         int hash = hash(user.getId());
@@ -70,6 +74,7 @@ public class IntegratedSortedListAndHashMap {
                 if(ptr.getValue().getDateJoined().before(UserJoined)){
                     u.setNext(ptr);
                     u.setPrev(ptr.getPrev());
+                    ptr.getPrev().setNext(u);
                     ptr.setPrev(u);
                     return true;
                 } else if(ptr==tail){
@@ -78,12 +83,19 @@ public class IntegratedSortedListAndHashMap {
                     tail = u;
                     return true;
                 }
+                ptr = ptr.getNext();
             }
             }
         }
         return false;
     }
-
+    public User[] objectToUser(Object[] obj){
+        User[] tmp= new User[obj.length];
+        for(int i=0; i< obj.length; i++){
+            tmp[i]= (User) obj[i];
+        }
+        return tmp;
+    }
     public User[] getUsersJoinedBefore(Date dateBefore){
         //because the Users who joined the earliest are last in the list
         //I can iterate through it from the tail to the beginning and add
@@ -97,11 +109,13 @@ public class IntegratedSortedListAndHashMap {
         }
         //mergeSort arraylist
         MergeSort<User> tmp2 = new MergeSort<User>(usersJoinedBefore,c);
-        return tmp2.getSorted().toArray();
+        Object[] objArr = tmp2.getSorted().toArray();
+        return objectToUser(objArr);
     }
     public User[] getUsersContaining(String query) {
         //iterates through List and checks if the name contains the
         //Value specified
+        //not returning combination of substrings right now
         ArrayList<User> usersContainingString = new ArrayList<>();
         ListElement<User> ptr = head;
         while(ptr != null){
@@ -111,13 +125,14 @@ public class IntegratedSortedListAndHashMap {
             ptr = ptr.getNext();
         }
 
-        return usersContainingString.toArray();
+        Object[] objArr = usersContainingString.toArray();
+        return objectToUser(objArr);
     }
     public User getByID(int uid){
         //uses the HashMap to find a User
         int hash = hash(uid);
         ListElement<User> ptr = getHashMapUser(hash);
-        while (ptr.getNextID() != null) {
+        while (ptr != null) {
             if (ptr.getValue().getId()==uid) {
                 return ptr.getValue();
             }

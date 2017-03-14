@@ -99,9 +99,9 @@ public class ArrayList<E>{
         }
         return false;
     }
-    //converts ArrayList into generic Array
-    public E[] toArray(){
-        E[] tmp = (E[]) new Object[size];
+    //converts ArrayList into Object Array
+    public Object[] toArray(){
+        Object[] tmp = (E[]) new Object[size];
         for(int i = 0; i < size; i++){
                 tmp[i]=this.get(i);
         }

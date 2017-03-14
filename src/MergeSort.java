@@ -3,16 +3,16 @@ import java.util.Comparator;
 //generic mergesort
 public class MergeSort<E> {
 
-    private ArrayList<E> strList;
+    private ArrayList<E> arrList;
     private final Comparator<E> c;
     // Constructor
     public MergeSort(ArrayList<E> input, Comparator<E> c) {
-        strList = input;
+        arrList = input;
         this.c = c;
-        strList = mergeSort(strList);
     }
     public ArrayList<E> getSorted(){
-        return strList;
+        arrList = mergeSort(arrList);
+        return arrList;
     }
 
     public ArrayList<E> mergeSort(ArrayList<E> whole) {
@@ -20,7 +20,7 @@ public class MergeSort<E> {
         ArrayList<E> right = new ArrayList<E>();
         int centerElement;
 
-        if (whole.size() == 1) {
+        if (whole.size() <= 1) {
             return whole;
         } else {
             centerElement = whole.size()/2;
@@ -32,33 +32,27 @@ public class MergeSort<E> {
             for (int i=0; i<centerElement; i++) {
                 left.add(whole.get(i));
             }
-            //sort right part of arraylist
-            right = mergeSort(right);
-            // Sort left part of arraylist
-            left  = mergeSort(left);
 
             // merge everything back together
-            merge(left, right, whole);
+            return merge(mergeSort(left), mergeSort(right));
         }
-        return whole;
     }
 
-    private void merge(ArrayList<E> left, ArrayList<E> right, ArrayList<E> whole) {
+    private ArrayList<E> merge(ArrayList<E> left, ArrayList<E> right) {
         int IndexLeft = 0;
         int IndexRight = 0;
-        int IndexWhole = 0;
+        ArrayList<E> merge = new ArrayList<E>();
 
         //while both arraylists are not empty get the larger value
         //of the two and copy it to the whole array
         while (IndexLeft < left.size() && IndexRight < right.size()) {
-            if ( c.compare(left.get(IndexLeft),right.get(IndexRight)) > 0) {
-                whole.set(IndexWhole, left.get(IndexLeft));
+            if (c.compare(left.get(IndexLeft),right.get(IndexRight)) > 0) {
+                merge.add(left.get(IndexLeft));
                 IndexLeft++;
             } else {
-                whole.set(IndexWhole, right.get(IndexRight));
+                merge.add(right.get(IndexRight));
                 IndexRight++;
             }
-            wholeIndex++;
         }
 
         ArrayList<E> rest;
@@ -75,8 +69,8 @@ public class MergeSort<E> {
 
         // Copy the rest of the arraylist which has not been used up yet to the rest arraylist
         for (int i=restIndex; i<rest.size(); i++) {
-            whole.set(IndexWhole, rest.get(i));
-            IndexWhole++;
+            merge.add(rest.get(i));
         }
+        return merge;
     }
 }

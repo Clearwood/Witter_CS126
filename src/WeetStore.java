@@ -128,7 +128,9 @@ public class WeetStore implements IWeetStore {
     public boolean addToHashMapUID(WeetListElement<Weet> u){
         int hash = hash(u.getValue().getUserId());
         if(hashmapUserID[hash]!=null){
-            u.addNext(getHashMapUser(hash));
+            u.addNext( getHashMapUser(hash));
+        } else {
+            u.addNext(null);
         }
         hashmapUserID[hash]=u;
         return true;
@@ -138,16 +140,20 @@ public class WeetStore implements IWeetStore {
         int hash = hash(u.getValue().getId());
         if(hashmapWeetID[hash]!=null){
             u.addNext(getHashMapWeet(hash));
+        } else {
+            u.addNext(null);
         }
         hashmapWeetID[hash]=u;
         return true;
     }
     //add WeetListElement to hashmap Date
     public boolean addToHashMapDate(WeetListElement<Weet> u){
-        Date date= u.getValue().getDateWeeted();
-        int hash = dateToHash(date);
+        int hash = dateToHash(u.getValue().getDateWeeted());
         if(hashmapDate[hash]!=null){
+            //System.err.println("old:"+getHashMapDate(hash).getValue().getId()+"new:"+u.getValue().getId()+"first"+u.getNext(0)+"second"+u.getNext(1));
             u.addNext(getHashMapDate(hash));
+        } else {
+            u.addNext(null);
         }
         hashmapDate[hash]=u;
         return true;
@@ -173,13 +179,18 @@ public class WeetStore implements IWeetStore {
     }
     //add a weet to all store
     public boolean addWeet(Weet weet) {
+        if(getWeet(weet.getId())!=null){
+            return false;
+        }
         addHashtag(weet.getMessage());
-        addSubStrings(weet.getMessage(),weet);
+        //addSubStrings(weet.getMessage(),weet);
         WeetListElement<Weet> u = new WeetListElement<Weet>(weet);
         //add weet to all hashmaps
+        //System.err.println("Date:"+weet.getDateWeeted()+"hash: "+ dateToHash(weet.getDateWeeted()));
         addToHashMapUID(u);
         addToHashMapWeetID(u);
         addToHashMapDate(u);
+        this.count++;
         //if the store is empty sets element as head and tail
         if(isEmpty()){
             tail = u;
@@ -187,7 +198,8 @@ public class WeetStore implements IWeetStore {
         } else{
             //tries to add Weet to the front of the ArrayList
             WeetListElement<Weet> ptr = head;
-            Date Weeted = u.getValue().getDateWeeted();
+            Date Weeted = weet.getDateWeeted();
+            //System.err.println(Weeted);
             //if Weet is more recent than head at as head
             if(ptr.getValue().getDateWeeted().before(Weeted)){
                 head.setPrev(u);
@@ -197,10 +209,10 @@ public class WeetStore implements IWeetStore {
                 //otherwise iterate through doubly linked List until Weet is more recent than
                 //the Element or the end of the List is reached
                 while(ptr != null){
-
                     if(ptr.getValue().getDateWeeted().before(Weeted)){
                         u.setNext(ptr);
                         u.setPrev(ptr.getPrev());
+                        ptr.getPrev().setNext(u);
                         ptr.setPrev(u);
                         return true;
                     } else if(ptr==tail){
@@ -209,12 +221,13 @@ public class WeetStore implements IWeetStore {
                         tail = u;
                         return true;
                     }
+                    ptr = ptr.getNext();
                 }
             }
         }
 
         // TODO 
-        return false;
+        return true;
     }
     //uses internal hashmap to getWeet by id
     public Weet getWeet(int wid) {
@@ -258,14 +271,41 @@ public class WeetStore implements IWeetStore {
         }
         //sorts ArrayList by recency
         MergeSort<Weet> tmp2 = new MergeSort<Weet>(tmp,c);
-        return tmp2.getSorted().toArray();
+        Object[] objArr = tmp2.getSorted().toArray();
+        return objectToWeet(objArr);
     }
-
+    public Weet[] objectToWeet(Object[] obj){
+        Weet[] tmp= new Weet[obj.length];
+        for(int i=0; i< obj.length; i++){
+            tmp[i]= (Weet) obj[i];
+        }
+        return tmp;
+    }
     public Weet[] getWeetsContaining(String query) {
-        //uses HashMap for any substring query
+        //iterates through List and checks if the name contains the
+        //Value specified
+        //not returning combination of substrings right now
+        ArrayList<Weet> weetsContainingString = new ArrayList<>();
+        WeetListElement<Weet> ptr = head;
+        while(ptr != null){
+            if (ptr.getValue().getMessage().contains(query)){
+                weetsContainingString.add(ptr.getValue());
+            }
+            ptr = ptr.getNext();
+        }
+        if(weetsContainingString.size()==0){
+            return null;
+        }
+        Object[] objArr = weetsContainingString.toArray();
+        return objectToWeet(objArr);
+        /*//uses HashMap for any substring query
         ArrayList<Weet> tmp = messageStore.get(query);
-        MergeSort<Weet> tmp2 = new MergeSort<Weet>(tmp,c);
-        return tmp2.getSorted().toArray();
+        if(tmp!=null) {
+            MergeSort<Weet> tmp2 = new MergeSort<Weet>(tmp, c);
+            Object[] objArr = tmp2.getSorted().toArray();
+            return objectToWeet(objArr);
+        }
+        return null;*/
     }
     //gets Weet from Date using internal hashmap
     public Weet[] getWeetsOn(Date dateOn) {
@@ -281,9 +321,11 @@ public class WeetStore implements IWeetStore {
             }
             ptr = ptr.getNext(2);
         }
+        //System.err.println(ptr.getNext(2).getValue().getDateWeeted());
         //checks if userid of weet equal to query
         MergeSort<Weet> tmp2 = new MergeSort<Weet>(tmp,c);
-        return tmp2.getSorted().toArray();
+        Object[] objArr = tmp2.getSorted().toArray();
+        return objectToWeet(objArr);
     }
     //gets all Weets before date
     public Weet[] getWeetsBefore(Date dateBefore) {
@@ -295,7 +337,8 @@ public class WeetStore implements IWeetStore {
             ptr = ptr.getPrev();
         }
         MergeSort<Weet> tmp2 = new MergeSort<Weet>(WeetsBefore,c);
-        return tmp2.getSorted().toArray();
+        Object[] objArr = tmp2.getSorted().toArray();
+        return objectToWeet(objArr);
     }
     //return internal store for hashtags implementation to get the 10 most trending hashtags
     public String[] getTrending() {

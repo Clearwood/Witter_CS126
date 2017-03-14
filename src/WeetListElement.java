@@ -14,7 +14,7 @@ public class WeetListElement<E> {
     public E getValue() {
         return this.value;
     }
-
+    public ArrayList<WeetListElement<E>> getArrayList(){ return this.otherReferences;}
     public WeetListElement<E> getNext() {
         return this.next;
     }
