@@ -34,11 +34,6 @@ public class HashtagStore{
     public String getHashtag(int index) {
         // Gets the element at index in the list by using linear traversal
         HashtagStoreElement<HashtagElement> ptr = head;
-        /*
-        for (int i=size()-1;i>index;i--) {
-            ptr = ptr.getNext();
-        }
-        */
         for(int i=0;i<index;i++){
             ptr = ptr.getNext();
         }
